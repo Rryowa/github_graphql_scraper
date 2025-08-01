@@ -53,14 +53,6 @@ async function main() {
 	}
 }
 
-function printUsage() {
-	console.log('Usage: deno run -A main.ts [options]')
-	console.log('Options:')
-	console.log('  --filename <name>    Search for repositories by filename.')
-	console.log('  --search <query>     Search for repositories by code content.')
-	console.log('  --help               Show this help message.')
-}
-
 async function fetchRepositories(
 	searchTerm: string,
 	type: 'filename' | 'content',
@@ -171,7 +163,7 @@ Fetching star counts for ${repos.length} repositories via GraphQL...`,
 		} else {
 			console.error('An unknown error occurred during GraphQL fetch:', error)
 		}
-		return repos // Return original repos on error
+		return repos
 	}
 }
 
@@ -182,6 +174,14 @@ function printResults(repos: Repository[]) {
 			console.log(`${i + 1}. ${repo.full_name} - ${repo.stargazers_count}★`)
 			console.log(`   URL: ${repo.html_url}`)
 		})
+}
+
+function printUsage() {
+	console.log('Usage: deno run -A main.ts [options]')
+	console.log('Options:')
+	console.log('  --filename <name>    Search for repositories by filename.')
+	console.log('  --search <query>     Search for repositories by code content.')
+	console.log('  --help               Show this help message.')
 }
 
 await main()
